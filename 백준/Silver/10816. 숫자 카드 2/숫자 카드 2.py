@@ -10,7 +10,6 @@ for i in card:
         dic[i] += 1
     else:
         dic[i] = 1
-    
 for j in check:
     if j in dic:
         print(dic[j], end=' ')

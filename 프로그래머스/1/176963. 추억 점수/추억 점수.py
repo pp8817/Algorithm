@@ -1,5 +1,5 @@
 def solution(name, yearning, photo):
-    name_dic = {i:v for i, v in zip(name, yearning)}
+    name_dic = dict(zip(name, yearning))
     
     photo_len = len(photo)
     

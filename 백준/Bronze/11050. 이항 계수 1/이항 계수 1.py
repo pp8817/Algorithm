@@ -9,10 +9,7 @@ for i in range(1, K+1):
     N-=1
     
 b = 1
-if K>0:
-    for j in range(1, K+1):
+for j in range(2, K+1):
         b*=j
-else:
-    b=1
 
 print(int(s/b))

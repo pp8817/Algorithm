@@ -14,4 +14,4 @@ def solution(number, limit, power):
             answer+=div_num
         else:
             answer+=power
-    return sum([cf(i) if cf(i)<=limit else power for i in range(1,number+1)])
+    return answer

@@ -1,10 +1,15 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-N = int(input())
-A = sorted(map(int, input().split()))
-B = sorted(map(int, input().split()), reverse=True)
+n = int(input())
+
+a_list = list(map(int, input().split()))
+b_list = list(map(int, input().split()))
+
 s = 0
-for a, b in zip(A, B):
-    s+=a*b
+for i in range(n):
+    s += min(a_list) * max(b_list)
+    a_list.pop(a_list.index(min(a_list)))
+    b_list.pop(b_list.index(max(b_list)))
+
 print(s)

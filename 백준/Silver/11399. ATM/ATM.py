@@ -1,12 +1,13 @@
 import sys
-input = lambda: sys.stdin.readline().rstrip()
+input = sys.stdin.readline
 
-N = int(input())
-P = list(map(int, input().split()))
+N = int(input()) #N^2
+P = map(int, input().split())
 
-P.sort(reverse=True)
-s = 0
-for i in range(N):
-    s += P[i] * (i+1)
+P = sorted(P, reverse=True)
+total=0
+
+for i, p in enumerate(P):
+    total += (i+1)*p
     
-print(s)
+print(total)

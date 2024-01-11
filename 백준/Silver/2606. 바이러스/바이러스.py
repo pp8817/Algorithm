@@ -1,21 +1,25 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-n = int(input())
-v = int(input())
-graph = [[] for i in range(n+1)] # 그래프 초기화
+def dfs(start):
+  visited[start] = True
+  
+  for w in graph[start]:
+    if not visited[w]:
+      dfs(w)
+  
 
-visited = [0]*(n+1)
+N = int(input())
+M = int(input())
 
-for i in range(v): #그래프 생성
-    a, b = map(int, input().split())
-    graph[a] += [b] # a에 b 연결
-    graph[b] += [a] # b에 a 연결 - 양방향
+graph = [[] for _ in range(N+1)]
+visited=[False]*(N+1)
 
-def dfs(v):
-    visited[v] = True
-    for nx in graph[v]:
-        if not visited[nx]:
-            dfs(nx)
-dfs(1) #시작 위치
+
+for _ in range(M):
+  a, b = map(int, input().split())
+  graph[a] += [b]
+  graph[b] += [a]
+  
+dfs(1)
 print(sum(visited)-1)

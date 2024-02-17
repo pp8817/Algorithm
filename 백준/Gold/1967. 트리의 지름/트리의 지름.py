@@ -22,12 +22,7 @@ visited = [-1]*(n+1)
 visited[1] = 0
 dfs(1,0)
 
-idx, tmp = 0,0
-
-for i in range(1, len(visited)):
-    if visited[i] > tmp:
-        tmp = visited[i]
-        idx = i
+idx = visited.index(max(visited))
 
 visited = [-1]*(n+1)
 visited[idx] = 0

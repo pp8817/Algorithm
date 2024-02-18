@@ -1,43 +1,49 @@
 import sys
+# input = sys.stdin.readline
+# sys.setrecursionlimit(10**5)
 from collections import deque
 
-graph = [[] for x in range(8)]
-walllist = []
-for i in range(8):
-    temp = sys.stdin.readline()
-    for j in range(8):
-        graph[i].append(".")
-        if temp[j] == "#":
-            walllist.append([i, j])
-
-# start: 7, 0 // end: 0, 7
 def bfs():
+    q = deque([(7,0)])
     cnt = 0
-    q = deque([(7, 0)]) # x, y
+    
     while q:
         for _ in range(len(q)):
-            x, y = q.popleft()
+            (x,y) = q.popleft()
 
-            if [x,y] in walllist:
+            if [x,y] in wall:
                 continue
-            if x == 0 or cnt == 9:
-                print(1)
-                return
-            adjlist = [[0, 0], [1, 0], [-1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
 
-            for addx, addy in adjlist:
-                nx = addx + x
-                ny = addy + y
-                if nx >= 0 and nx < 8 and ny >= 0 and ny < 8:
-                    if [nx, ny] not in walllist:
-                        q.append((nx, ny))
-        for i in range(len(walllist)):
-            walllist[i] = [walllist[i][0]+1, walllist[i][1]]
-        cnt+=1
+            if x==0 or cnt == 9:
+                return 1
 
-    print(0)
+            for dx, dy in d:
+                nx, ny = x+dx, y+dy
 
-if len(walllist) == 0:
+                if 0<=nx<8 and 0<=ny<8:
+                    if [nx,ny] not in wall:
+                        q.append((nx,ny))
+        wall_down()
+        cnt += 1
+    return 0
+
+def wall_down():
+    for i in range(len(wall)):
+        wall[i] = [wall[i][0]+1, wall[i][1]]
+            
+n, m = 8,8
+grid = [[] for _ in range(8)]
+wall = []
+d = [[0, 0], [1, 0], [-1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+for i in range(8):
+    a = input()
+    for j in range(8):
+        grid[i].append(".")
+        if a[j] == "#":
+            wall.append([i,j])
+    
+if len(wall) == 0:
     print(1)
 else:
-    bfs()
+    print(bfs())

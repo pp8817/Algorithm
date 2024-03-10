@@ -1,9 +1,14 @@
+import sys
+input = lambda: sys.stdin.readline().rstrip()
+
 n = int(input())
+
 cnt = 1
-cnt_six = 6
+s = 6
 count = 1
+
 while n > cnt:
-    count += 1
-    cnt += cnt_six
-    cnt_six += 6
+    cnt += s
+    s += 6
+    count +=1
 print(count)

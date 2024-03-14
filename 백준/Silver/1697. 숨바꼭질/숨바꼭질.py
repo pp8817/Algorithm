@@ -8,7 +8,6 @@ visited = [False]*e
 
 q = deque()
 q.append((N, 0))
-visited[N] = 1
 
 while q:
     x, c = q.popleft()

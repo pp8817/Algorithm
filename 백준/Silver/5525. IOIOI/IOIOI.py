@@ -4,17 +4,17 @@ input = lambda: sys.stdin.readline().rstrip()
 N = int(input())
 M = int(input())
 S = input()
+answer, i, count = 0, 0, 0
 
-Pn = ""
-if N == 1:
-    Pn = "IOI"
-else:
-    Pn = "IOI" + "OI"*(N-1)
+while i < (M - 1):
+    if S[i:i+3] == 'IOI':
+        i += 2
+        count += 1
+        if count == N:
+            answer += 1
+            count -= 1
+    else:
+        i += 1
+        count = 0
 
-pl = len(Pn)
-c = 0
-for i in range(M-pl+1):
-    if S[i]=='I':
-        if S[i:i+pl] == Pn:
-            c+=1
-print(c)
+print(answer)

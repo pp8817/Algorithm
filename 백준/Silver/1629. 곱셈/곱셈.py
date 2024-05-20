@@ -1,14 +1,16 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-def sol(a,b,c):
-    if b == 1:
-        return a%c
-    elif b%2==0:
-        return (sol(a,b//2,c)**2)%c
-    else:
-        return ((sol(a,b//2,c)**2)*a)%c
-
-
 A, B, C = map(int, input().split())
-print(sol(A,B, C))
+
+def sol(x, n):
+    if n == 1:
+        return A%C
+    else:
+        tmp = sol(x, n//2)
+        if n%2==0:
+            return (tmp*tmp)%C
+        else:
+            return (tmp*tmp*A)%C
+
+print(sol(A,B))

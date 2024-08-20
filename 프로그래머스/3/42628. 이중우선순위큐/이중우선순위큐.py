@@ -1,32 +1,43 @@
 import heapq
 
 def solution(operations):
-    pmax = []
-    pmin = []
+    min_heap = []
+    max_heap = []
+    entry_map = {}  # 삽입된 원소의 상태를 관리
     
-    count = 0
-    
-    for order in operations:
-        a,b = map(str, order.split())
-        b = int(b)
-        if a == "I":
-            heapq.heappush(pmin, b)
-            heapq.heappush(pmax, -b)
-            count += 1
+    for operation in operations:
+        op, num = operation.split()
+        num = int(num)
+        
+        if op == "I":
+            heapq.heappush(min_heap, num)
+            heapq.heappush(max_heap, -num)
+            
+            if num in entry_map:
+                entry_map[num] += 1
+            else:
+                entry_map[num] = 1
         else:
-            if count == 0:
-                continue
-            if b == 1: # 큐에서 최댓값을 삭제
-                value = heapq.heappop(pmax)
-                pmin.remove(-value)
-                
-            else: # 큐에서 최솟값을 삭제
-                value = heapq.heappop(pmin)
-                pmax.remove(-value)
-                
-            count -= 1
-                
-    if count == 0:
+            if num == 1: # 최댓값 삭제
+                while max_heap and entry_map[-max_heap[0]] == 0:
+                    heapq.heappop(max_heap)
+                if max_heap:
+                    value = -heapq.heappop(max_heap)
+                    entry_map[value] -= 1
+            else: # 최솟값 삭제
+                while min_heap and entry_map[min_heap[0]] == 0:
+                    heapq.heappop(min_heap)
+                if min_heap:
+                    value = heapq.heappop(min_heap)
+                    entry_map[value] -= 1
+                    
+    while max_heap and entry_map[-max_heap[0]] == 0:
+            heapq.heappop(max_heap)
+            
+    while min_heap and entry_map[min_heap[0]] == 0:
+            heapq.heappop(min_heap)
+            
+    if not max_heap or not min_heap:
         return [0,0]
     else:
-        return [max(pmin), min(pmin)]
+        return [-max_heap[0], min_heap[0]]

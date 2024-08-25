@@ -1,5 +1,3 @@
-# 테두리: 1, 직사각형 내부: 0, 외부: -1
-# bfs로 풀 예정이지만 올바른 경로로 유도하기 위해 모든 좌표를 2배해서 풀이
 from collections import deque
 
 def solution(rectangle, characterX, characterY, itemX, itemY):

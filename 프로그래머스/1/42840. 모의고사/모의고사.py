@@ -14,10 +14,6 @@ def solution(answers):
     
     m = 0
     for i, value in enumerate(count):
-        if value > m:
-            answer = [i+1]
-            m = value
-        elif value == m:
+        if value == max(count):
             answer.append(i+1)
-        
     return answer

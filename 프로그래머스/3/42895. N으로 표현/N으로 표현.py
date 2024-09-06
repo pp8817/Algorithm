@@ -21,12 +21,3 @@ def solution(N, number):
             return answer
         
     return -1
-            
-    
-                    
-    
-    
-    if answer > 8:
-        return -1
-    else:
-        return answer

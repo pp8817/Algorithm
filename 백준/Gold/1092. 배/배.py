@@ -1,26 +1,25 @@
 import sys
-input = sys.stdin.readline
+input = lambda: sys.stdin.readline().rstrip()
 
 N = int(input())
-cranes = list(map(int, input().split()))
+limit_w = list(map(int, input().split())) # 크레인 무게 제한
 M = int(input())
-boxes = list(map(int, input().split()))
+W = list(map(int, input().split()))
 
-cranes.sort(reverse=True)
-boxes.sort(reverse=True)
+limit_w.sort(reverse=True)
+W.sort(reverse=True)
+ans = 0
 
-cnt = 0
-
-if boxes[0] > cranes[0]: cnt = -1
+if W[0] > limit_w[0]: ans=-1
 else:
-    while boxes:
-        for c in cranes:
-            if boxes and c < boxes[-1]:
-                continue
-            for b in boxes:
-                if c >= b:
-                    boxes.remove(b)
+    while W:
+        for c in limit_w:
+            if W and c < W[-1]:
+                break
+            for w in W:
+                if c >= w:
+                    W.remove(w)
                     break
-        cnt+=1
-        
-print(cnt)
+        ans += 1
+
+print(ans)

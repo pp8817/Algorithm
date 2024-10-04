@@ -1,31 +1,28 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-n = int(input())
-arr = list(map(int, input().split(' ')))
+N = int(input())
+arr = list(map(int, input().split()))
 arr.sort()
 
-left = 0
-right = n-1
+start = 0
+end = N-1
 
-answer = abs(arr[left] + arr[right])
-final = [arr[left], arr[right]]
+ans = abs(arr[start] + arr[end])
+result = [arr[start], arr[end]]
 
+while start < end:
+    s = arr[start] + arr[end]
 
-while left < right:
-    left_val = arr[left]
-    right_val = arr[right]
+    if abs(s) < ans:
+        ans = abs(s)
+        result = [arr[start], arr[end]]
+        if ans == 0:
+            break
 
-    sum = left_val + right_val
-  
-    if abs(sum) < answer:
-        answer = abs(sum)
-        final = [left_val, right_val]
-        if answer == 0:
-          break
-    if sum < 0:
-        left += 1
+    if s < 0:
+        start += 1
     else:
-        right -= 1
+        end -= 1
 
-print(final[0], final[1])
+print(result[0], result[1])

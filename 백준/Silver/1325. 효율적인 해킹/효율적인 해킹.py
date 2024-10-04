@@ -36,4 +36,4 @@ maxCnt = max(ans)
 
 for i in range(len(ans)):
     if maxCnt == ans[i]:
-        print(i+1)
+        print(i+1, end=' ')

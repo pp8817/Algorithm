@@ -1,25 +1,25 @@
 import sys
 sys.setrecursionlimit(10**6)
-n = int(sys.stdin.readline())
+input = lambda: sys.stdin.readline().rstrip()
 
-graph = [[] for i in range(n+1)]
+def dfs(v):
+    visited[v] = True
 
-for i in range(n-1):
-    a, b = map(int, sys.stdin.readline().split())
-    graph[a].append(b)
-    graph[b].append(a)
+    for w in graph[v]:
+        if not visited[w]:
+            dic[w] = v
+            dfs(w)
 
-visited = [0]*(n+1)
+N = int(input())
+graph = [[] for _ in range(N+1)]
+for _ in range(N-1):
+    s,t = map(int, input().split())
+    graph[s].append(t)
+    graph[t].append(s)
 
-arr = []
+visited = [False]*(N+1)
 
-def dfs(s):
-    for i in graph[s]:
-        if visited[i] == 0:
-            visited[i] = s
-            dfs(i)
-
+dic = {i:0 for i in range(1,N+1)}
 dfs(1)
-
-for x in range(2, n+1):
-    print(visited[x])
+for i in range(2, N+1):
+    print(dic[i])

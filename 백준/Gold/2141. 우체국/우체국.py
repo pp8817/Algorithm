@@ -3,17 +3,21 @@ input = lambda: sys.stdin.readline().rstrip()
 
 N = int(input())
 arr = []
-total_p = 0
+total_num = 0
 for _ in range(N):
-    x, a = map(int, input().split())
-    arr.append([x,a])
-    total_p += a
+    idx, num = map(int, input().split())
+    arr.append((idx, num))
+    total_num += num
 
-arr = sorted(arr, key = lambda x: x[0])
+total_num /= 2
 
-c = 0
-for x, a in arr:
-    c += a
-    if c >= total_p/2:
-        print(x)
+arr.sort(key=lambda x: x[0])
+
+tmp = 0
+for i in range(N):
+    idx, num = arr[i]
+    tmp += num
+
+    if tmp >= total_num:
+        print(idx)
         break

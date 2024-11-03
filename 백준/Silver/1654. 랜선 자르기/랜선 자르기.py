@@ -1,19 +1,21 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-k, n = map(int, input().split())
-lan = [int(input()) for _ in range(k)]
+K, N = map(int, input().split())
+lt = [int(input()) for _ in range(K)]
 
-start, end = 1, max(lan)
+start, end = 1, max(lt)
 
-while start <= end: # 이분 탐색으로 적절한 랜선의 길이를 탐색
+while start<=end:
     mid = (start+end)//2
     lines = 0
-    for i in lan:
-        lines += i//mid
 
-    if lines >= n:
-        start = mid + 1
+    for l in lt:
+        lines += l//mid
+    
+    if lines>=N: # 기준 충족
+        start = mid+1
     else:
         end = mid-1
+
 print(end)

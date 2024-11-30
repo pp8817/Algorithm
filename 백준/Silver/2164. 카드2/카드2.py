@@ -2,11 +2,11 @@ import sys
 input = lambda: sys.stdin.readline().rstrip()
 from collections import deque
 
-n = int(input())
+N = int(input())
+que = deque(i for i in range(1, N+1))
 
-q = deque(range(1,n+1))
+while len(que) >= 2:
+    que.popleft()
+    que.append(que.popleft())
 
-while len(q) != 1:
-    q.popleft()
-    q.append(q.popleft())
-print(q[0])
+print(que[0])

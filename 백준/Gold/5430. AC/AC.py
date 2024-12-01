@@ -3,39 +3,41 @@ input = lambda: sys.stdin.readline().rstrip()
 from collections import deque
 
 def sol(p, arr):
-    rev = 0
-    for s in p:
-        if s == 'R':
-            rev += 1
-        elif s == 'D':
+    flag = 0 # 0: popleft, 1: pop
+    for cmd in p:
+        if cmd == "R": # 뒤집기
+            if flag:
+                flag = 0
+            else:
+                flag = 1
+        elif cmd == "D":
             if len(arr) == 0:
                 return "error"
+
+            if flag: # flag == 1
+                arr.pop()
             else:
-                if rev % 2==0:
-                    arr.popleft()
-                else:
-                    arr.pop()
-    if rev%2 != 0:
-        arr.reverse()
+                arr.popleft()
+
     result = "["
-    if len(arr)!=0:
+    if len(arr) != 0:
+        if flag:
+            arr.reverse()
+        
         for i in range(len(arr)-1):
             result += str(arr[i])
-            result += ","
+            result += ','
         result += str(arr[-1])
     result += "]"
     return result
     
-
-
 T = int(input())
 
 for i in range(T):
     p = input()
     n = int(input())
     if n>0:
-        arr = input()[1:-1]
-        arr = deque(map(int, arr.split(',')))
+        arr = deque(map(int, input()[1:-1].split(',')))
         print(sol(p, arr))
     else:
         arr = input()

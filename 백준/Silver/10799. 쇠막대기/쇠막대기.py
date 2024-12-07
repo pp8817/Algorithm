@@ -1,16 +1,19 @@
 import sys
-s=list(sys.stdin.readline())
-answer=0
-stack=[]
-for i in range(len(s)):
-    if s[i]=='(':
-        stack.append(s[i])
+input = lambda: sys.stdin.readline().rstrip()
 
-    elif s[i]==')':
-        if s[i-1]=='(':
+li = list(input())
+
+ans = 0
+stack = []
+
+for i in range(len(li)):
+    if li[i] == '(':
+        stack.append(li[i])
+    elif li[i] == ')':
+        if li[i-1] == '(': #레이저 
             stack.pop()
-            answer+=len(stack)
+            ans += len(stack)
         else:
-            answer+=1
+            ans += 1
             stack.pop()
-print(answer)
+print(ans)

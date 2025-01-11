@@ -1,19 +1,18 @@
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
-def back():
-    if len(ans) == M:
-        print(" ".join(map(str, ans)))
+def dfs():
+    if len(s) == M:
+        print(' '.join(map(str, s)))
         return
-    for i in range(len(m)):
-        if m[i] not in ans:
-            ans.append(m[i])
-            back()
-            ans.pop()
+    for i in range(N):
+        if arr[i] not in s:
+            s.append(arr[i])
+            dfs()
+            s.pop()
 
 N, M = map(int, input().split())
-
-m = sorted(list(map(int, input().split())))
-
-ans = []
-back()
+arr = list(map(int, input().split()))
+arr.sort()
+s = []
+dfs()

@@ -12,7 +12,7 @@ for i in range(2, N+1):
         continue
     
     for j in range(int(math.sqrt(i)), 0, -1):
-        dp[i] = min(dp[i],
-                1+dp[i-j**2])
+        if dp[i] > 1+dp[i-j**2]:
+            dp[i] = 1+dp[i-j**2]
 
 print(dp[N])

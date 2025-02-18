@@ -1,42 +1,36 @@
 import sys
-input = lambda: sys.stdin.readline().rstrip()
 import heapq
+input = lambda: sys.stdin.readline().rstrip()
 
-# 최단 경로 -> 우선 순위 큐, 다익스트라 알고리즘
-
-def dijkstra(start_point):
-    dist = [float('INF') for _ in range(V)] # 각 정점까지의 최단 경로를 담을 리스트
-    dist[start_point] = 0
-    pq = [(0, start_point)]
-
-    while pq:
-        current_dist, n = heapq.heappop(pq)
-
-        if current_dist > dist[n]:
-            continue
-
-        for (v, d) in graph[n]:
-            distance = d + current_dist
-            if dist[v] > distance:
-                dist[v] = distance
-                heapq.heappush(pq, (distance, v))
-
-    return dist
-
-V, E = map(int, input().split())
-
-start_point = int(input())-1
-
+V, E = map(int, input().split()) # 정점의 개수, 간선의 개수
+K = int(input()) # 시작 정점
 graph = [[] for _ in range(V+1)]
 
 for _ in range(E):
     u,v,w = map(int, input().split())
-    graph[u-1].append((v-1,w))
+    graph[u].append((v,w))
 
-dist = dijkstra(start_point)
+distance = [float('INF')]*(V+1)
+distance[K] = 0
 
-for i in dist:
-    if i == float("INF"):
-        print("INF")
+q = []
+heapq.heappush(q, (0, K))
+
+while q:
+    dist, now = heapq.heappop(q)
+
+    if distance[now] < dist: # distance에 저장된 값이 현재 노드까지의 값(dis)보다 작다면 이미 방문한 노드이기 때문에 패스 
+        continue
+
+    for v,w in graph[now]:
+        if dist+w < distance[v]: # 기존에 입력되어 있는 값보다 작다면
+            distance[v] = dist+w
+            heapq.heappush(q, (dist+w, v))
+
+
+# i번째 줄에 i번 정점으로의 최단 경로값 출력, 시작점은 0
+for i in distance[1:]:
+    if i == float('INF'):
+        print('INF')
         continue
     print(i)

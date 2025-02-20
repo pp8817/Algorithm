@@ -1,42 +1,39 @@
 import sys
-import heapq
 input = lambda: sys.stdin.readline().rstrip()
+import heapq
 
-def dijkstra(start):
-    distances = [float('inf')] * (N + 1)
-    distances[start] = 0
-    pq = [(0, start)]
-    
-    while pq:
-        current_dist, node = heapq.heappop(pq)
+INF = int(1e9)
+def dijstra(start):
+    q = [(0, start)]
+    distance = [INF]*(N+1)
+    distance[start] = 0
+
+    while q:
+        dist, now = heapq.heappop(q)
         
-        if current_dist > distances[node]:
+        if dist > distance[now]:
             continue
-        
-        for (v, t) in road[node]:
-            distance = current_dist + t
-            if distance < distances[v]: # distance가 기존 v까지의 거리보다 적다면
-                distances[v] = distance # distances[v]를 distance로 변경
-                heapq.heappush(pq, (distance, v))
-    
-    return distances
 
-N, M, X = map(int, input().split())
-road = [[] for _ in range(N + 1)]
+        for e,t in graph[now]:
+            if dist+t < distance[e]:
+                distance[e] = dist+t
+                heapq.heappush(q, (dist+t, e))
 
-for i in range(M):
-    s, e, t = map(int, input().split())
-    road[s].append((e, t))
+    return distance
 
-# 각 마을에서 X로 가는 최단 거리
-to_X = [0] * (N + 1)
-for i in range(1, N + 1):
-    distances = dijkstra(i)
-    to_X[i] = distances[X]
 
-# X에서 각 마을로 가는 최단 거리
-from_X = dijkstra(X)
+N,M,X = map(int, input().split()) # 마을 수, 도로 수, 목적지
 
-# 결과 계산
-result = [to_X[i] + from_X[i] for i in range(1, N + 1)]
+graph = [[] for _ in range(N+1)]
+for _ in range(M):
+    s,e,t = map(int, input().split())
+    graph[s].append((e,t))
+
+to_X = [0]*(N+1)
+for i in range(1, N+1):
+    to_X[i] = dijstra(i)[X]
+
+from_X = dijstra(X)
+
+result = [to_X[i]+from_X[i] for i in range(1, N+1)]
 print(max(result))

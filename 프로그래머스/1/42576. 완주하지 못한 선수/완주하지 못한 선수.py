@@ -1,15 +1,14 @@
 def solution(participant, completion):
     maps = {}
-    for i in participant: 
-        if i in maps:
-            maps[i] += 1
+    for p in participant:
+        if p in maps:
+            maps[p] += 1
         else:
-            maps[i] = 1
-    
+            maps[p] = 1
     
     for c in completion:
         maps[c] -= 1
     
-    for name, v in maps.items():
-        if v:
+    for name, c in maps.items():
+        if c != 0:
             return name

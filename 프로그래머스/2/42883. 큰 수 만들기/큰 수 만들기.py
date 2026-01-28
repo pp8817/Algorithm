@@ -6,8 +6,9 @@ def solution(number, k):
             stack.pop()
             k -= 1
         stack.append(num)
-        
+    
     if k > 0:
         stack = stack[:-k]
     
     return "".join(stack)
+            

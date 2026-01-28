@@ -1,5 +1,4 @@
 def solution(n, lost, reserve):
-    # 여벌을 가진 학생이 도난을 당한 경우 제외
     lost_set = set(lost) - set(reserve)
     reserve_set = set(reserve) - set(lost)
 

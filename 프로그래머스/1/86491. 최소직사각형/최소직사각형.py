@@ -1,4 +1,12 @@
-# 각 명함을 돌리면서 명함을 돌려도 기존 길이 최댓값보다 작다면 통과
 def solution(sizes):
-    rotated = [sorted(card, reverse=True) for card in sizes]
-    return max(card[0] for card in rotated) * max(card[1] for card in rotated)
+    w, h = 0, 0
+    
+    for size in sizes:
+        if size[0] > size[1]:
+            w = max(w, size[0])
+            h = max(h, size[1])
+        else:
+            w = max(w, size[1])
+            h = max(h, size[0])
+    
+    return w*h

@@ -1,21 +1,17 @@
 from collections import deque
 
 def solution(s):
-    answer = False
-    q = deque(s)
-    check = 0
-    
-    while q:
-        x = q.popleft()
-        if x == "(":
-            check += 1
+    stack = []
+    for ch in s:
+        if ch == '(':
+            stack.append('(')
         else:
-            check -= 1
-        
-        if check < 0:
-            return False
-        
-    if check == 0:
+            if len(stack) and stack[-1] == '(':
+                stack.pop()
+            else:
+                return False
+    
+    if len(stack) == 0:
         return True
     
     return False

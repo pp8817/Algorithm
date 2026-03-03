@@ -1,20 +1,21 @@
-import itertools
-
 def solution(k, dungeons):
+    n = len(dungeons)
+    visited = [False] * n
     answer = 0
-    
-    arr = list(itertools.permutations(dungeons, len(dungeons)))
-    
-    for i in arr:
-        kk = k
-        result = 0
-        for j in i:
-            if kk < j[0]:
+    def dfs(health, cnt):
+        nonlocal answer
+        if cnt > answer:
+            answer = cnt
+        
+        for i in range(n):
+            if visited[i]:
                 continue
-            elif kk >= j[0]:
-                kk -= j[1]
-                result += 1
-        answer = max(result, answer)       
+            need, minus = dungeons[i]
+            if health >= need:
+                visited[i] = True
+                dfs(health-minus, cnt + 1)
+                visited[i] = False
     
-    return answer        
-    
+    dfs(k, 0)
+    return answer
+                

@@ -1,10 +1,10 @@
 def solution(clothes):
+    cnt = {}
+    for name, category in clothes:
+        cnt[category] = cnt.get(category, 0) + 1
+    
     answer = 1
-    
-    maps = {i[1]:1 for i in clothes}
-    for clothe, category in clothes:
-        maps[category] += 1
-    
-    for i in maps.values():
-        answer *= i
-    return answer-1
+    for k in cnt.values():
+        answer *= (k + 1)
+
+    return answer - 1

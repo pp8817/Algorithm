@@ -1,26 +1,20 @@
 from collections import deque
 
 def solution(priorities, location):
-    q = deque(priorities)
-    answer = 0
-    
-    while q:
-        p = q.popleft()
+    q = deque()
+    for i in range(len(priorities)):
+        q.append((i, priorities[i]))
         
-        if len(q) == 0:
-            answer += 1
-            break
-            
-        if p < max(q):
-            q.append(p)
-
+    M = max(priorities)
+    cnt = 1
+    while q:
+        idx, temp = q.popleft()
+        
+        if temp == M:
+            if idx == location:
+                return cnt
+            if len(q) > 0:
+                M = max(q, key=lambda x: x[1])[1]
+            cnt += 1
         else:
-            answer += 1
-            if location == 0:
-                break
-                
-        location -= 1
-        if location < 0:
-            location = len(q)-1
-    
-    return answer
+            q.append((idx, temp))

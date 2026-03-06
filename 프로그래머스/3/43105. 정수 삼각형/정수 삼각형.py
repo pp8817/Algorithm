@@ -1,15 +1,15 @@
 def solution(triangle):
     N = len(triangle)
-    dp = [[0]*i for i in range(1,N+1)]
+    dp = [[0]*i for i in range(1, N+1)]
     dp[0][0] = triangle[0][0]
     
-    for i in range(1,N): # row
-        for j in range(i+1): # col
-            if j == 0:
-                dp[i][j] = dp[i-1][j] + triangle[i][j]
-            elif j == i:
-                dp[i][j] = dp[i-1][j-1] + triangle[i][j]
+    for r in range(1, N):
+        for c in range(r+1):
+            if c == 0:
+                dp[r][c] = dp[r-1][0] + triangle[r][c]
+            elif c == r:
+                dp[r][c] = dp[r-1][-1] + triangle[r][c]
             else:
-                dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j]
-                
+                dp[r][c] = max(dp[r-1][c-1], dp[r-1][c]) + triangle[r][c]
+    
     return max(dp[-1])

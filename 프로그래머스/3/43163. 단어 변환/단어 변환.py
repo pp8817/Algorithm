@@ -3,27 +3,24 @@ from collections import deque
 def solution(begin, target, words):
     if target not in words:
         return 0
-    
-    def promissing(word1, word2):
-        count = 0
-        for i in range(len(word1)):
+    N = len(target)
+    def check(word1, word2):
+        cnt = 0
+        for i in range(N):
             if word1[i] != word2[i]:
-                count += 1
-
-        return count == 1
-    
-    q = deque([])
-    q.append((begin, 0)) # 현재 단어, 변환 횟수
+                cnt += 1
         
+        return cnt == 1
+    
+    q = deque([(begin, 0)])
+    
     while q:
-        current_word, current_count = q.popleft()
+        current_word, current_cnt = q.popleft()
         
         if current_word == target:
-            return current_count
+            return current_cnt
         
         for word in words:
-            if promissing(current_word, word):
-                q.append((word, current_count+1))
+            if check(current_word, word):
                 words.remove(word)
-              
-    return 0
+                q.append((word, current_cnt+1))

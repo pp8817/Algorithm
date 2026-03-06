@@ -1,27 +1,22 @@
 from collections import deque
 
 def solution(maps):
-    answer = 0
-    R,C = len(maps), len(maps[0])
+    r, c = len(maps), len(maps[0])
+    visited = [[0]*c for _ in range(r)]
+    dx, dy = [0,0,1,-1], [1,-1,0,0]
+    q = deque([([0,0])])
+    visited[0][0] = 1
     
-    def bfs():
-        while q:
-            x,y,c = q.popleft()
-            
-            if (x,y) == (R-1,C-1):
-                return c
-    
-            for rx,ry in [(0,1), (0,-1), (1,0), (-1,0)]:
-                nx,ny = x+rx, y+ry
-
-                if 0<=nx<R and 0<=ny<C and not visited[nx][ny]:
-                    if maps[nx][ny] == 1:
-                        visited[nx][ny] = True
-                        q.append((nx,ny,c+1))
-        return -1
-    q = deque([])
-    q.append((0,0,1))
-    visited = [[False]*C for _ in range(R)]
-    
-    count = bfs()
-    return count
+    while q:
+        x, y = q.popleft()
+        
+        if (x,y) == (r-1, c-1):
+            return visited[x][y]
+        
+        for i in range(4):
+            rx, ry = x+dx[i], y+dy[i]
+            if 0<=rx<r and 0<=ry<c and not visited[rx][ry] and maps[rx][ry]:
+                visited[rx][ry] = visited[x][y] + 1
+                q.append((rx,ry))
+                
+    return -1 

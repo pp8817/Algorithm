@@ -1,0 +1,54 @@
+SELECT 
+    CASE
+        WHEN (d.SKILL_CODE & (
+                SELECT SUM(CODE)
+                FROM SKILLCODES
+                WHERE CATEGORY = 'Front End'
+             )) <> 0
+         AND (d.SKILL_CODE & (
+                SELECT CODE
+                FROM SKILLCODES
+                WHERE NAME = 'Python'
+             )) <> 0
+            THEN 'A'
+        WHEN (d.SKILL_CODE & (
+                SELECT CODE
+                FROM SKILLCODES
+                WHERE NAME = 'C#'
+             )) <> 0
+            THEN 'B'
+        WHEN (d.SKILL_CODE & (
+                SELECT SUM(CODE)
+                FROM SKILLCODES
+                WHERE CATEGORY = 'Front End'
+             )) <> 0
+            THEN 'C'
+    END AS GRADE,
+    d.ID,
+    d.EMAIL 
+FROM DEVELOPERS d
+WHERE (
+    (d.SKILL_CODE & (
+        SELECT SUM(CODE)
+        FROM SKILLCODES
+        WHERE CATEGORY = 'Front End'
+    )) <> 0
+    AND (d.SKILL_CODE &(
+        SELECT CODE
+        FROM SKILLCODES
+        WHERE NAME = 'Python'
+    )) <> 0
+    )
+    OR
+        (d.SKILL_CODE & (
+            SELECT CODE
+            FROM SKILLCODES
+            WHERE NAME = 'C#'
+        )) <> 0
+    OR
+    (d.SKILL_CODE & (
+        SELECT SUM(CODE)
+        FROM SKILLCODES
+        WHERE CATEGORY = 'Front End'
+    )) <> 0
+ORDER BY GRADE ASC, ID ASC;
